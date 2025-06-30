@@ -1,6 +1,8 @@
+'use client';
 
-import LoginForm from '@/components/auth/login-form';
+import { Suspense } from 'react';
 import { Logo } from '@/components/logo';
+import LoginForm from '@/components/auth/login-form';
 
 export default function LoginPage() {
   return (
@@ -9,7 +11,12 @@ export default function LoginPage() {
         <div className="mb-8 flex justify-center">
           <Logo />
         </div>
-        <LoginForm />
+
+        {/* ✅ Wrap LoginForm in Suspense */}
+        <Suspense fallback={<div>Loading login form...</div>}>
+          <LoginForm />
+        </Suspense>
+        
       </div>
     </div>
   );
