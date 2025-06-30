@@ -1,36 +1,30 @@
 'use client';
 
-import { Suspense } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import Image from "next/image";
+import { useRouter, useSearchParams } from 'next/navigation';
+import AppLayout from "@/components/app-layout";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { MapPin, Wallet, CreditCard, Landmark, Map, Users, Building, Plus, Minus } from "lucide-react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useDeliveries } from '@/context/delivery-context';
+import { useToast } from "@/hooks/use-toast";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { generateMapImage } from '@/ai/flows/generate-map-flow';
+import { Skeleton } from '@/components/ui/skeleton';
+import { vendors } from '@/lib/data';
 
-// Wrap entire original logic in this component
+const mockLocations = [
+  "KC Food Court", "MIT Central Library", "Block 5, Room 201",
+  "Block 17, Room 404", "Student Plaza", "Night Canteen", "Campus Store"
+];
+
 function InnerNewDeliveryPage() {
-  // 🔁 BEGIN your entire original page code here
-  // Everything from below is **your original code**, unchanged
-
-  import { useState, useEffect } from 'react';
-  import Image from "next/image";
-  import { useRouter, useSearchParams } from 'next/navigation';
-  import AppLayout from "@/components/app-layout";
-  import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-  import { Input } from "@/components/ui/input";
-  import { Label } from "@/components/ui/label";
-  import { Textarea } from "@/components/ui/textarea";
-  import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-  import { Button } from "@/components/ui/button";
-  import { MapPin, Wallet, CreditCard, Landmark, Map, Users, Building, Plus, Minus } from "lucide-react";
-  import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-  import { useDeliveries } from '@/context/delivery-context';
-  import { useToast } from "@/hooks/use-toast";
-  import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-  import { generateMapImage } from '@/ai/flows/generate-map-flow';
-  import { Skeleton } from '@/components/ui/skeleton';
-  import { vendors } from '@/lib/data';
-
-  const mockLocations = [
-    "KC Food Court", "MIT Central Library", "Block 5, Room 201",
-    "Block 17, Room 404", "Student Plaza", "Night Canteen", "Campus Store"
-  ];
-
   const router = useRouter();
   const searchParams = useSearchParams();
   const { addDelivery, addVendorDelivery } = useDeliveries();
@@ -52,7 +46,6 @@ function InnerNewDeliveryPage() {
 
   const role = searchParams.get('role');
   const dashboardLink = `/dashboard${role ? `?role=${role}` : ''}`;
-
   const selectedVendorData = vendors.find(v => v.id === selectedVendor);
 
   useEffect(() => {
@@ -161,13 +154,12 @@ function InnerNewDeliveryPage() {
 
   return (
     <AppLayout>
-      {/* 👇 keep your full return JSX here */}
-      {/* I've removed it for brevity. You can paste it back exactly as is from your original code. */}
+      {/* 👇 Your JSX UI here (if large, keep it in a separate component file) */}
+      <h1 className="text-xl font-bold">New Delivery Page</h1>
     </AppLayout>
   );
 }
 
-// Export final component wrapped in <Suspense>
 export default function NewDeliveryPage() {
   return (
     <Suspense fallback={<div>Loading delivery form...</div>}>
